@@ -34,10 +34,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
 const dotenv = __importStar(require("dotenv"));
+const cors = require('cors'); // Import CORS package
 dotenv.config();
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = yield (0, app_1.initServer)();
+
+        // Use CORS middleware
+        app.use(cors({
+            origin: 'http://localhost:3000',
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type']
+        }));
+
         app.listen(8000, () => console.log('Server Started at Port : 8000'));
     });
 }
